@@ -1,6 +1,6 @@
 # Optimization-Methods
 
-Optimization Methods for Engineers Project
+Optimization Methods for Engineers Project (Spring Semester 23)
 
 # Resources
 
