@@ -43,7 +43,7 @@ def simulated_annealing(
     # use default temperature cooling scheme if not specified
     if temperature is None:
         def temperature(it_curr, it_max=iterations, temp_max=0.1):
-            return temp_max * (1 - it_curr / it_max)
+            return max(temp_max * (1 - it_curr / it_max), 1e-7)
 
     goal = utils.validate_goal(goal)
     better, _, _ = utils.comparison_funcs_from_goal(goal)
