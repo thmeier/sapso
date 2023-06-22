@@ -2,29 +2,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from matplotlib import ticker
+from . import utils
 
-"""
-Plots a 2D contour plot of the objective function `objective` over the region `area`.
-"""
 def contour_plot(objective, area, history, resolution=100, ax=None, title=''):
+    """
+    Plots a 2D contour plot of the objective function `objective` over the region `area`.
+    """
 
     # SETUP #------------------------------------------------------------------#
 
-    # ensure working with np.ndarray
-    if not isinstance(area, np.ndarray):
-        area = np.array(area)
-
-    # extract dimensions
-    n, m = area.shape
-
-    # assert correct number of constraints
-    assert m == 2, (f'The bounding hyper cube `area` of the search space '
-                    f'has inavlid dimensions. Expected (n, 2) got {area.shape}')
-
-    # assert correct number of dimensions
-    assert n == 2, f'Plotting is only supported for 2D objectives. Got {n}D'
-
-    del n, m # not needed, delete to reduce name clashes
+    area = utils.validate_area(area)
 
     # INIT #-------------------------------------------------------------------#
 
