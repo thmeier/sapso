@@ -44,7 +44,8 @@ def simulated_annealing(
         def temperature(it_curr, it_max=iterations, temp_max=0.1):
             return temp_max * (1 - it_curr / it_max)
 
-    better, _, _ = utils.validate_goal(goal)
+    goal = validate_goal(goal)
+    better, _, _ = utils.comparison_funcs_from_goal(goal)
 
     # INIT #-------------------------------------------------------------------#
 
