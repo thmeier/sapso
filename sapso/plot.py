@@ -42,7 +42,7 @@ def contour_plot(objective, area, history, resolution=100, ax=None, title=''):
     ax.plot(*history['points'].T, '-', color='tab:orange')
 
     # add best encountered point
-    ax.plot(*history['p_best'], 'o', color='white')
+    ax.plot(*history['best_point'], 'o', color='white')
 
     # set title if specified
     if title != '':
