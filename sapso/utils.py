@@ -12,12 +12,12 @@ def normalize(v):
     input
     -----
     v : numpy.ndarray
-        a single vector of shape $(n,)$
+        A single vector of shape $(n,)$
 
     output
     ------
     n : numpy.ndarray
-        the (approximately) normalized vector
+        The (approximately) normalized vector
     """
     n = v / (np.linalg.norm(v) + 1e-7)
     return n
@@ -115,9 +115,8 @@ def comparison_funcs_from_goal(goal):
     output
     ------
     better : function
-        from $R^2$ to ${true, false}$
-        decides whether input `x` is better than input `y`
-        i.e. one of `<` and `>`
+        Decides whether input `x` is better than input `y`
+        i.e. one of `<` and `>` depending on goal.
 
     extremum : function
         numpy function. One of `np.max` and `np.min`, depending on `goal`
@@ -125,6 +124,7 @@ def comparison_funcs_from_goal(goal):
     argextremum : function
         numpy functin. One of `np.argmax` and `np.argmin` depending on `goal`
     """
+
     # define better in terms of optimization goal
     if goal.lower() == 'min':
         better, extremum, argextremum = lambda x, y: x < y, np.min, np.argmin
