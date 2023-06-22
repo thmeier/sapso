@@ -1,8 +1,7 @@
+import utils
 import numpy as np
 
-"""
-Perform simulated annealing optimization on objective functi
-"""
+# TODO: scale step_size by area lengths (c.f. PSO)
 def simulated_annealing(
         objective, area,
         temperature=None,
@@ -11,36 +10,41 @@ def simulated_annealing(
         seed=42,
         goal='min'
         ):
+    """
+    Perform simulated annealing optimization on objective function
+
+    input
+    -----
+    objective : function
+        objective/fitness/cost function, i.e. $\R^n \mapsto \R$,
+        where $n$ is the dimensionality of the optimization problem.
+
+    area : numpy.ndarray
+        bounding hypercube of search space, i.e. has shape $(n, 2)$,
+        where $n$ is the dimensionality of the optimization problem.
+        Thus `area` is an array of lower and upper bounds, which equivalently
+        means, `area[i] == [i_min, i_max]`, where `i_min` and `i_max` 
+        denote the lower and upper bound of the i-th component.
+
+    temperature : function | None
+
+    # TODO: finish documentation
+    """
 
     # SETUP #------------------------------------------------------------------#
 
-    # ensure working with np.ndarray
-    if not isinstance(area, np.ndarray):
-        area = np.array(area)
+    # validates if area is in correct format
+    area = utils.validate_area(area)
 
     # extract dimensions
-    n, m = area.shape
-
-    # assert correct number of constraints
-    assert m == 2, (f'The bounding hyper cube `area` of the search space '
-                    f'has inavlid dimensions. Expected (n, 2) got {area.shape}')
-
-    del m # not needed, delete to reduce name clashes
+    n, _ = area.shape
 
     # use default temperature cooling scheme if not specified
     if temperature is None:
         def temperature(it_curr, it_max=iterations, temp_max=0.1):
             return temp_max * (1 - it_curr / it_max)
 
-    # assert correct optimization goal
-    assert goal.lower() in ['min', 'max'], (f'Invalid optimization goal `goal`. '
-                                            f'Expected "min" or "max" got {goal}')
-
-    # define better in terms of optimization goal
-    if goal.lower() == 'min':
-        better = lambda x, y: x < y
-    else:
-        better = lambda x, y: x > y
+    better = utils.validate_goal(goal)
 
     # INIT #-------------------------------------------------------------------#
 
@@ -48,7 +52,7 @@ def simulated_annealing(
     np.random.seed(seed)
 
     # create and evaluate initial point inside bounding hyper cube `area`
-    p_curr = area[:, 0] + np.random.rand(n) * (area[:, 1] - area[:, 0])
+    p_curr = utils.uniform(area)
     f_curr = objective(*p_curr)
 
     # track best candidate and its value
@@ -59,7 +63,7 @@ def simulated_annealing(
 
     # SA #---------------------------------------------------------------------#
 
-    for i in range(1, iterations):
+    for i in range(1, iterations+1):
 
         # UPDATE #-------------------------------------------------------------#
 
@@ -69,13 +73,13 @@ def simulated_annealing(
 
         # TODO: check if point update rule makes sense
         #       i.e. can at most make steps of size `step_size`
-        # TODO: make sure new point is still inside `area`
-        #       of course for our goals this isn't an issue
-        #       BUT the user might expect points to stay inside the specified region
-        #       because for example due to external constraints
+        #       i.e. make step-size dependent on area
 
         # calculate and evaluate new candidate point
         p_new = p_curr + p_delta
+        # clips i-th value of p_new into interval area[i, :]
+        p_new = np.clip(p_new, *area.T)
+
         f_new = objective(*p_new)
 
         # keep track of point and value
@@ -102,10 +106,19 @@ def simulated_annealing(
 
     # ensure the history uses numpy arrays, facilitates plotting with matplotlib
     history = {
-        'points': np.array(history['points']),
-        'values': np.array(history['values']),
-        'p_best': p_best,
-        'f_best': f_best,
+        # results
+        'points'     : np.array(history['points']),
+        'values'     : np.array(history['values']),
+        'best_point' : p_best,
+        'best_val'   : f_best,
+        # meta information
+        'algorithm'  : 'simulated_annealing',
+        'params'     : {
+            'goal'       : goal,
+            'seed'       : seed,
+            'iterations' : iterations,
+            'step_size'  : step_size
+        },
     }
 
     # return best encountered point, value and history of points
