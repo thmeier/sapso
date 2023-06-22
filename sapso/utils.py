@@ -91,6 +91,29 @@ def validate_goal(goal):
 
     output
     ------
+    goal : string
+        One of `min` or `max`, denotes wheter minimization or maximization is sought
+    """
+    goal = goal.lower()
+
+    # assert valid optimization goal
+    assert goal in ['min', 'max'], (
+        f'Invalid optimization goal `goal`. Expected "min" or "max" got {goal}'
+    )
+
+    return goal
+
+def comparison_funcs_from_goal(goal):
+    """
+    Return appropriate comparison functions depending on a valid optimization goal
+
+    input
+    -----
+    goal : string
+        One of `min` or `max`, denotes wheter minimization or maximization is sought
+
+    output
+    ------
     better : function
         from $R^2$ to ${true, false}$
         decides whether input `x` is better than input `y`
@@ -102,11 +125,6 @@ def validate_goal(goal):
     argextremum : function
         numpy functin. One of `np.argmax` and `np.argmin` depending on `goal`
     """
-    # assert correct optimization goal
-    assert goal.lower() in ['min', 'max'], (
-        f'Invalid optimization goal `goal`. Expected "min" or "max" got {goal}'
-    )
-
     # define better in terms of optimization goal
     if goal.lower() == 'min':
         better, extremum, argextremum = lambda x, y: x < y, np.min, np.argmin
