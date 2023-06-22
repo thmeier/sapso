@@ -1,18 +1,29 @@
-# all functions taken from
-# https://en.wikipedia.org/wiki/Test_functions_for_optimization
+"""
+Sample 2D test functions taken from 
+https://en.wikipedia.org/wiki/Test_functions_for_optimization.
+These allow to nicely plot and investigate optimization algorithms.
+"""
 
 import numpy as np
 
-from abc import ABC, abstractmethod  # abstract base class for implementing interface
-from utils import validate_area
+# abstract base class for implementing interface
+from abc import ABC, abstractmethod
+from . import utils
+
 
 class Testfunction2D(ABC):
+    """
+    Abstract base class (ABC) that implements the interface of any 2D test
+    function. Most importantly, this enforces each function to have a name and
+    the area of the search space.
+    """
+
     def __init__(self, name, area, opt_pos, opt_val, goal='min'):
         self.name = name
-        self.area = validate_area(area)
+        self.area = utils.validate_area(area)
         self.opt_pos = opt_pos
         self.opt_val = opt_val
-        self.goal = goal # TODO: validate_goal but requires change of validate_goal
+        self.goal = utils.validate_goal(goal)
 
     @abstractmethod
     def objective(self, x, y):
@@ -20,7 +31,7 @@ class Testfunction2D(ABC):
 
 class Ackley(Testfunction2D):
     def __init__(self):
-        self.super().__init__(
+        super().__init__(
             name='Ackley',
             area=np.array([[-5., 5.], [-5., 5.]]),
             opt_pos=np.array([0., 0.]),
@@ -35,7 +46,7 @@ class Ackley(Testfunction2D):
 
 class Sphere(Testfunction2D):
     def __init__(self):
-        self.super().__init__(
+        super().__init__(
             name='Sphere',
             area=np.array([[-np.inf, np.inf], [-np.inf, np.inf]]),
             opt_pos=np.array([0., 0.]),
@@ -47,7 +58,7 @@ class Sphere(Testfunction2D):
 
 class Beale(Testfunction2D):
     def __init__(self):
-        self.super().__init__(
+        super().__init__(
             name='Beale',
             area=np.array([[-4.5, 4.5], [-4.5, 4.5]]),
             opt_pos=np.array([3., 0.5]),
@@ -62,7 +73,7 @@ class Beale(Testfunction2D):
 
 class Himmelblau(Testfunction2D):
     def __init__(self):
-        self.super().__init__(
+        super().__init__(
             name='Himmelblau',
             area=np.array([[-5., 5.], [-5., 5.]]),
             opt_pos=np.array([[3., 2.], [-2.805118, 3.131312], [-3.779310, -3.283186], [3.584428, -1.848126]]),
