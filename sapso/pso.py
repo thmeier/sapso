@@ -26,7 +26,8 @@ class Particle:
         # dimensionality of optimization problem
         self.n = self.area.shape[0]
         # goal of optimization (minimization / maximization)
-        self.better, _, _ = utils.validate_goal(goal)
+        self.goal = utils.validate_goal(goal)
+        self.better, _, _ = utils.comparison_funcs_from_goal(self.goal)
         # inertia weight, typically in [0, 1)
         self.w = w
         # cognitive coefficient (i.e. individual behaviour), typically in [1, 3]
@@ -90,7 +91,8 @@ def particle_swarm_optimization(objective, area, n_particles, iterations):
     a_neigh = 2   # social coefficient,    in [1,3]
     goal = 'min'  # optimization goal,     in ['min', 'max']
 
-    _, extremum, argextremum = utils.validate_goal(goal)
+    goal = utils.validate_goal(goal)
+    _, extremum, argextremum = utils.comparison_funcs_from_goal(goal)
 
     particles = [
         Particle(objective, area, a_ind, a_neigh, w, goal)
