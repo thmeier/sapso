@@ -1,5 +1,6 @@
-import utils
 import numpy as np
+
+from . import utils
 
 # TODO: scale step_size by area lengths (c.f. PSO)
 def simulated_annealing(
@@ -16,11 +17,11 @@ def simulated_annealing(
     input
     -----
     objective : function
-        objective/fitness/cost function, i.e. $\R^n \mapsto \R$,
+        Objective/fitness/cost function, i.e. $\R^n \mapsto \R$,
         where $n$ is the dimensionality of the optimization problem.
 
     area : numpy.ndarray
-        bounding hypercube of search space, i.e. has shape $(n, 2)$,
+        Bounding hypercube of search space, i.e. has shape $(n, 2)$,
         where $n$ is the dimensionality of the optimization problem.
         Thus `area` is an array of lower and upper bounds, which equivalently
         means, `area[i] == [i_min, i_max]`, where `i_min` and `i_max` 
@@ -44,7 +45,7 @@ def simulated_annealing(
         def temperature(it_curr, it_max=iterations, temp_max=0.1):
             return temp_max * (1 - it_curr / it_max)
 
-    goal = validate_goal(goal)
+    goal = utils.validate_goal(goal)
     better, _, _ = utils.comparison_funcs_from_goal(goal)
 
     # INIT #-------------------------------------------------------------------#
