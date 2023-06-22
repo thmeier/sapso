@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+from matplotlib import ticker
+
 """
 Plots a 2D contour plot of the objective function `objective` over the region `area`.
 """
@@ -43,7 +45,7 @@ def contour_plot(objective, area, history, resolution=100, ax=None, title=''):
         fig , ax = plt.subplots(1,1)
 
     # add 2D contour plot
-    cbar = ax.contourf(X, Y, Z)
+    cbar = ax.contourf(X, Y, Z, locator=ticker.LogLocator(), levels = resolution)
 
     # add colorbar if didn't get axis
     if not got_axis:
