@@ -1,13 +1,7 @@
 import itertools
 import numpy as np
 
-import utils
-
-"""
-# TODO: 
-- move class Particle into particle.py?
-- let function particle_swarm_optimization be class that extends super class
-"""
+from . import utils
 
 
 class Particle:
