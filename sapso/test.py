@@ -38,7 +38,7 @@ class Ackley(Testfunction2D):
             opt_val=0.0
         )
 
-    def objective(x, y):
+    def objective(self, x, y):
         out = -20 * np.exp(-0.2 * np.sqrt(0.5 * (x**2 + y**2)))
         out -= np.exp(0.5 * (np.cos(2 * np.pi * x) + np.cos(2 * np.pi * y)))
         out += np.e + 20
@@ -48,12 +48,12 @@ class Sphere(Testfunction2D):
     def __init__(self):
         super().__init__(
             name='Sphere',
-            area=np.array([[-np.inf, np.inf], [-np.inf, np.inf]]),
+            area=np.array([[-50.0, 50.0], [-50.0, 50.0]]),
             opt_pos=np.array([0., 0.]),
             opt_val=0.0
         )
 
-    def objective(x, y):
+    def objective(self, x, y):
         return x**2 + y**2
 
 class Beale(Testfunction2D):
@@ -65,7 +65,7 @@ class Beale(Testfunction2D):
             opt_val=0.0
         )
 
-    def objective(x, y):
+    def objective(self, x, y):
         out = (1.5 - x + x * y) ** 2
         out += (2.25 - x + x * y ** 2) ** 2
         out += (2.625 - x + x * y ** 3) ** 2
@@ -80,5 +80,5 @@ class Himmelblau(Testfunction2D):
             opt_val=0.0
         )
 
-    def objective(x, y):
+    def objective(self, x, y):
         return (x**2 + y - 11)**2 + (x + y**2 - 7)**2
