@@ -1,3 +1,7 @@
+"""
+Unit test about functionality of sapso library. 
+These computations are non-sensical and only relevant for testing purposes.
+"""
 import sapso
 
 tfunc = sapso.test.Eggholder()
@@ -10,3 +14,6 @@ PSO = sapso.pso.ParticleSwarmOptimization(tfunc.objective, tfunc.area, **kwargs_
 
 history_sa = SA.optimize()
 history_pso = PSO.optimize()
+
+sapso.utils.print_results(history_sa, tfunc, end='\n\n')
+sapso.utils.print_results(history_sa, sapso.test.Himmelblau())
