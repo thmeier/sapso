@@ -21,8 +21,8 @@ class Testfunction2D(ABC):
     def __init__(self, name, area, opt_pos, opt_val, goal='min'):
         self.name = name
         self.area = utils.validate_area(area)
-        self.opt_pos = opt_pos
         self.opt_val = opt_val
+        self.opt_pos = opt_pos
         self.goal = utils.validate_goal(goal)
 
     @abstractmethod
@@ -34,8 +34,10 @@ class Ackley(Testfunction2D):
         super().__init__(
             name='Ackley',
             area=np.array([[-5., 5.], [-5., 5.]]),
-            opt_pos=np.array([0., 0.]),
-            opt_val=0.0
+            opt_val=0.0,
+            opt_pos=np.array([
+                (0., 0.)
+            ]),
         )
 
     def objective(self, x, y):
@@ -49,8 +51,10 @@ class Sphere(Testfunction2D):
         super().__init__(
             name='Sphere',
             area=np.array([[-50.0, 50.0], [-50.0, 50.0]]),
-            opt_pos=np.array([0., 0.]),
-            opt_val=0.0
+            opt_val=0.0,
+            opt_pos=np.array([
+                (0., 0.)
+            ]),
         )
 
     def objective(self, x, y):
@@ -61,8 +65,10 @@ class Beale(Testfunction2D):
         super().__init__(
             name='Beale',
             area=np.array([[-4.5, 4.5], [-4.5, 4.5]]),
-            opt_pos=np.array([3., 0.5]),
-            opt_val=0.0
+            opt_val=0.0,
+            opt_pos=np.array([
+                (3., 0.5)
+            ]),
         )
 
     def objective(self, x, y):
@@ -76,9 +82,31 @@ class Himmelblau(Testfunction2D):
         super().__init__(
             name='Himmelblau',
             area=np.array([[-5., 5.], [-5., 5.]]),
-            opt_pos=np.array([[3., 2.], [-2.805118, 3.131312], [-3.779310, -3.283186], [3.584428, -1.848126]]),
-            opt_val=0.0
+            opt_val=0.0,
+            opt_pos=np.array([
+                (3., 2.),
+                (-2.805118, 3.131312),
+                (-3.779310, -3.283186),
+                (3.584428, -1.848126)
+            ]),
         )
 
     def objective(self, x, y):
         return (x**2 + y - 11)**2 + (x + y**2 - 7)**2
+
+class Eggholder(Testfunction2D):
+    def __init__(self):
+        super().__init__(
+            name='Eggholder',
+            area=np.array([[-512., 512.], [-512., 512.]]),
+            opt_val=-959.6407,
+            opt_pos=np.array([
+                (512., 404.2319)
+            ]),
+        )
+
+    def objective(self, x, y):
+        y += 47
+        out = -y * np.sin(np.sqrt(np.abs(x / 2 + y))) 
+        out -= x * np.sin(np.sqrt(np.abs(x - y)))
+        return out
