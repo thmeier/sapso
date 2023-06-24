@@ -2,26 +2,33 @@ import itertools
 import numpy as np
 
 from . import utils
+from . import base
 
 
 class Particle:
-    # TODO: add docstring with input, methods and properties
+    # TODO(LOW): add docstring with input, methods and properties
 
+    # TODO(HIGH): reset itertools.count() to 0 upon creation of class PSO(OptimizationMethod)
+    #       otherwise the id gets increased for every new particle independent of particle_swarm_optimization calls!! BAD
+    # thus implement class PSO that resets every time!
+    # TODO(HIGH): add owner reference to a particle, where the owner holds the itertools.count(), which gets reset appropriately
     # (user hidden) function to keep track of unique incremental IDs (thread-safe?)
-    __new_id = itertools.count().__next__
+    # TODO(HIGH): definitely add 'owner' field with __new_id @ owner
+    #__new_id = itertools.count().__next__
 
-    def __init__(self, objective, area, a_ind, a_neigh, w, goal='min'):
+    def __init__(self, owner, objective, area, w, a_ind, a_neigh):
+        # owner of particle, self.id is relative to owner
+        self.owner = owner
         # unique particle ID
-        self.id = self.__class__.__new_id()
+        self.id = self.owner._new_id()
+        # TODO: remove
+        #self.id = self.__class__.__new_id()
         # objective / cost / fitness function
         self.objective = objective
         # bounding hyper cube of search space
         self.area = utils.validate_area(area)
         # dimensionality of optimization problem
         self.n = self.area.shape[0]
-        # goal of optimization (minimization / maximization)
-        self.goal = utils.validate_goal(goal)
-        self.better, _, _ = utils.comparison_funcs_from_goal(self.goal)
         # inertia weight, typically in [0, 1)
         self.w = w
         # cognitive coefficient (i.e. individual behaviour), typically in [1, 3]
@@ -29,24 +36,25 @@ class Particle:
         # social coefficient (i.e. group behaviour), typically in [1, 3]
         self.a_neigh = a_neigh
 
-        # TODO: could be optimized but needs attention to not coupple variables together!
+        # TODO(LOW): could be optimized but needs attention to not coupple variables together!
 
         # position and value of particle in $R^n$ and $R$
+        # TODO: make utils.uniform take self.rng to generate numbers
         self.pos = utils.uniform(area)
-        self.val = self.objective(self.pos)
+        self.val = self.objective(*self.pos)
 
         # individual best position and corresponding value
         self.pos_best_ind = np.array(self.pos)
-        self.val_best_ind = self.objective(self.pos_best_ind)
+        self.val_best_ind = self.objective(*self.pos_best_ind)
 
         # group best position and corresponding value
         self.pos_best_neigh = np.array(self.pos)
-        self.val_best_neigh = self.objective(self.pos_best_neigh)
+        self.val_best_neigh = self.objective(*self.pos_best_neigh)
 
         # velocity of particle in R^n
         # initialization according to wikipedia
         # https://en.wikipedia.org/wiki/Particle_swarm_optimization#Algorithm
-        self.vel = utils.uniform(np.hstack(-np.diff(area), np.diff(area)))
+        self.vel = utils.uniform(np.hstack([-np.diff(area), np.diff(area)]))
 
     def update(self):
         r_ind = np.random.rand(self.n)
@@ -64,80 +72,187 @@ class Particle:
         self.pos = np.clip(self.pos + self.vel, *self.area.T)
 
     def eval(self):
-        self.val = self.objective(self.pos)
+        self.val = self.objective(*self.pos)
 
-        if better(self.val, self.val_best_ind):
+        if np.less(self.val, self.val_best_ind):
             self.pos_best_ind = np.copy(self.pos)
             self.val_best_ind = np.copy(self.val)
 
-        if better(self.val, self.val_best_neigh):
+        if np.less(self.val, self.val_best_neigh):
             self.pos_best_neigh = np.copy(self.pos)
             self.val_best_neigh = np.copy(self.val)
 
-def particle_swarm_optimization(objective, area, n_particles, iterations):
-    # TODO bring into params
 
-    seed = 7
+class ParticleSwarmOptimization(base.OptimizationMethod):
+    def __init__(self,
+                 objective, area, 
+                 iterations=100,
+                 seed=42,
+                 n_particles=10,
+                 w=0.75,          # inertial decay,        in [0,1)
+                 a_ind=1,         # cognitive coefficient, in [1,3]
+                 a_neigh=2,       # social coefficient,    in [1,3]
+                 goal='min'       # optimization goal,     in ['min', 'max']
+                 ):
+        super().__init__(objective, area, iterations, seed, goal)
+        # counter for generating increasing Particle IDs (relative to self)
+        self._new_id = itertools.count().__next__
+        # PSO-specific parameters
+        self.params = base.Params()
+        self.params.n_particles = n_particles
+        self.params.w = w
+        self.params.a_ind = a_ind
+        self.params.a_neigh = a_neigh
 
-    # params according to wikipedia
-    w = 0.75      # inertial decay,        in [0,1)
-    a_ind   = 1   # cognitive coefficient, in [1,3]
-    a_neigh = 2   # social coefficient,    in [1,3]
-    goal = 'min'  # optimization goal,     in ['min', 'max']
+        # TODO(LOW): adapt Particle() to only take params and extract themselves?
+        # TODO(HIGH): check if particle id counter works, otherwise add parent reference (self) to Particle and reset counter manually in PSO
+        self.particles = [
+            Particle(self, self.objective, self.area, self.params.w, self.params.a_ind, self.params.a_neigh)
+            for _ in range(n_particles)
+        ]
 
-    goal = utils.validate_goal(goal)
-    _, extremum, argextremum = utils.comparison_funcs_from_goal(goal)
+    def _reset_history(self):
+        # track history of encountered points
+        self.history = {'points': [], 'values': [], 'particle_id': []}
 
-    particles = [
-        Particle(objective, area, a_ind, a_neigh, w, goal)
-        for _ in range(n_particles)
-    ]
+    def _update_history(self, particle):
+        """
+        CAN ONLY BE CALLED AFTER _reset_history
+        CAN ONLY BE CALLED BEFORE _finalize_history
+        """
+        # keep track of point and value
+        self.history['points'].append(particle.pos)
+        self.history['values'].append(particle.val)
+        self.history['particle_id'].append(particle.id)
 
-    init_val = np.array([p.val for p in particles])
-    init_pos = np.array([p.pos for p in particles])
+    def _finalize_history(self):
+        """
+        CAN ONLY BE CALLED AFTER _reset_history
+        """
 
-    best_val = extremum(init_val)
-    best_pos = init_pos[argextremum(init_val)]
+        # ensure the history uses numpy arrays, facilitates plotting with matplotlib
+        self.history = {
+            # results
+            'points'      : np.array(self.history['points']),
+            'values'      : np.array(self.history['values']),
+            'particle_id' : np.array(self.history['particle_id']),
+            'best_val'    : self.best_val,
+            'best_point'  : self.best_pos,
+            # meta information
+            'meta'        : {
+                # TODO: remove method, rename method_short to method
+                'method'       : 'particle_swarm',
+                'method_short' : 'PSO',
+                'params'       : {
+                    'iterations'  : self.iterations,
+                    'seed'        : self.seed,
+                    'goal'        : self.goal,
+                    'n_particles' : self.params.n_particles, 
+                    'w'           : self.params.w,
+                    'a_ind'       : self.params.a_ind,
+                    'a_neigh'     : self.params.a_neigh
+                },
+            },
+        }
 
-    # track history of encountered points
-    history = {'points': [], 'values': [], 'particle_id': []}
 
-    for _ in range(iterations):
-        for particle in particles:
+    def optimize(self):
+        self._reset_history()
 
-            particle.val_best_neigh = best_val
-            particle.pos_best_neigh = best_pos
+        init_val = np.array([p.val for p in self.particles])
+        init_pos = np.array([p.pos for p in self.particles])
 
-            particle.update()
-            particle.eval()
+        self.best_val = np.min(init_val)
+        self.best_pos = init_pos[np.argmin(init_val)]
 
-            # keep track of point and value
-            history['points'].append(particle.pos)
-            history['values'].append(particle.val)
-            history['particle_id'].append(particle.id)
+        for _ in range(self.iterations):
+            for particle in self.particles:
 
-            best_val = particle.val_best_neigh
-            best_pos = particle.pos_best_neigh
+                particle.val_best_neigh = self.best_val
+                particle.pos_best_neigh = self.best_pos
 
-    # ensure the history uses numpy arrays, facilitates plotting with matplotlib
-    history = {
-        # results
-        'points'      : np.array(history['points']),
-        'values'      : np.array(history['values']),
-        'particle_id' : np.array(history['particle_id']),
-        'best_point'  : best_pos,
-        'best_val'    : best_val,
-        # meta information
-        'algorithm'   : 'particle_swarm',
-        'params'      : {
-            'goal'       : goal,
-            'seed'       : seed,
-            'iterations' : iterations,
-            'w'          : w,
-            'a_ind'      : a_ind,
-            'a_neigh'    : a_neigh
-        },
-    }
+                particle.update()
+                particle.eval()
 
-    return history
+                self._update_history(particle)
 
+                self.best_val = particle.val_best_neigh
+                self.best_pos = particle.pos_best_neigh
+
+        self._finalize_history()
+
+        return self.history
+
+# NOTE: LEGACY CODE - WILL BE REMOVED
+#def particle_swarm_optimization(
+#        objective, area, 
+#        iterations=100,
+#        seed=42,
+#        n_particles=10,
+#        w=0.75,          # inertial decay,        in [0,1)
+#        a_ind=1,         # cognitive coefficient, in [1,3]
+#        a_neigh=2,       # social coefficient,    in [1,3]
+#        goal='min'       # optimization goal,     in ['min', 'max']
+#        ):
+#    # TODO(LOW): docstring
+#
+#    goal = utils.validate_goal(goal)
+#    _, extremum, argextremum = utils.comparison_funcs_from_goal(goal)
+#
+#    particles = [
+#        Particle(objective, area, w, a_ind, a_neigh, goal)
+#        for _ in range(n_particles)
+#    ]
+#
+#    init_val = np.array([p.val for p in particles])
+#    init_pos = np.array([p.pos for p in particles])
+#
+#    best_val = extremum(init_val)
+#    best_pos = init_pos[argextremum(init_val)]
+#
+#    # track history of encountered points
+#    history = {'points': [], 'values': [], 'particle_id': []}
+#
+#    for _ in range(iterations):
+#        for particle in particles:
+#
+#            particle.val_best_neigh = best_val
+#            particle.pos_best_neigh = best_pos
+#
+#            particle.update()
+#            particle.eval()
+#
+#            # keep track of point and value
+#            history['points'].append(particle.pos)
+#            history['values'].append(particle.val)
+#            history['particle_id'].append(particle.id)
+#
+#            best_val = particle.val_best_neigh
+#            best_pos = particle.pos_best_neigh
+#
+#    # ensure the history uses numpy arrays, facilitates plotting with matplotlib
+#    history = {
+#        # results
+#        'points'      : np.array(history['points']),
+#        'values'      : np.array(history['values']),
+#        'particle_id' : np.array(history['particle_id']),
+#        'best_point'  : best_pos,
+#        'best_val'    : best_val,
+#        # meta information
+#        'meta'        : {
+#            'method'       : 'particle_swarm',
+#            'method_short' : 'PSO',
+#            'params'       : {
+#                'iterations'  : iterations,
+#                'seed'        : seed,
+#                'goal'        : goal,
+#                'n_particles' : n_particles, 
+#                'w'           : w,
+#                'a_ind'       : a_ind,
+#                'a_neigh'     : a_neigh
+#            },
+#        },
+#    }
+#
+#    return history
+#
