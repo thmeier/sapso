@@ -3,6 +3,7 @@ Utility functions that abstract away unnecessary details.
 """
 
 import numpy as np
+import matplotlib as mpl
 
 
 def normalize(v):
@@ -22,6 +23,7 @@ def normalize(v):
     n = v / (np.linalg.norm(v) + 1e-7)
     return n
 
+# TODO: check with rng.uniform(low=,high=,size=)
 def uniform(area):
     """
     Compute a n-dimensional random vector,
@@ -132,3 +134,62 @@ def comparison_funcs_from_goal(goal):
         better, extremum, argextremum = lambda x, y: x > y, np.max, np.argmax
 
     return better, extremum, argextremum
+
+def title_from_history(history, test_func, title_length='long'):
+    testf      = test_func.name
+    method     = history['meta']['method_short']
+    params     = history['meta']['params']
+    iterations = params['iterations']
+    seed       = params['seed']
+
+    info_method = f'{method} @ {testf}\n'
+    info_general = f'it:{iterations}, seed:{seed}'
+
+    if method == 'PSO':
+        con = '\n'
+        info_specific =  f"w: {params['w']}, "
+        info_specific += f"a_ind: {params['a_ind']}, "
+        info_specific += f"a_neigh: {params['a_neigh']}"
+
+    elif method == 'SA':
+        con = ', '
+        info_specific = f"step_size: {params['step_size']}"
+
+    else:
+        raise RuntimeError(f'Method `{method}` not supported!')
+
+    if title_length == 'long':
+        title = info_method + info_general + con + info_specific
+
+    elif title_length == 'short':
+        title = info_method
+
+    else:
+        raise RuntimeError(f'Title length `{title_length}` not supported!')
+
+    return title
+
+def print_results(history, test_func, end='\n'):
+    pos_str = ''
+    for pos in test_func.opt_pos:
+        pos_str += f'{pos} | '
+    pos_str = pos_str.rstrip(' | ')
+
+    print(f"optimum - {history['meta']['method_short']} @ {test_func.name}:", end='\n\n')
+    print(f"* found    : pos: {history['best_point']}")
+    print(f"           : val: {history['best_val']}", end='\n\n')
+    print(f"* expected : pos: {pos_str}")
+    print(f"           : val: {test_func.opt_val}", end=end)
+
+def colors_from_cmap(cmap_name):
+    """
+    Get the individual colors of qualitative matplotlib colormaps, c.f. [1].
+    This facilitates picking a large number of colors that are still pleasant.
+
+    [1]: https://matplotlib.org/stable/tutorials/colors/colormaps.html#qualitative
+    """
+    cmap = mpl.colormaps.get_cmap(cmap_name)
+    colors = np.unique(np.array([
+        cmap(i) for i in np.linspace(0,1, 100)
+    ]), axis=0)
+    return colors
