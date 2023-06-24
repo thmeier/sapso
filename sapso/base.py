@@ -7,7 +7,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# abstract base class for implementing interfaces
 from abc import ABC, abstractmethod 
 
 from . import utils
@@ -63,21 +62,21 @@ class OptimizationMethod(ABC):
         pass
 
 
-"""
-parameter object to hold arbitrary attributes with description.
-
-usage:
-```
-params = Params('string to be used as title')
-params
-> 'string to be used as title'
-params.any_atttribute = 42
-params.another_config_attr = [777, 'nice']
-```
-
-TODO: check security implications of the object
-"""
 class Params(object):
+    """
+    Object to hold arbitrary attributes with description.
+
+    usage
+    -----
+
+    ```
+    params = Params('string to be used as title')
+    params
+    > 'string to be used as title'
+    params.any_atttribute = 42
+    params.another_config_attr = [777, 'nice']
+    ```
+    """
 
     def __init__(self, *args):
         self.__header__ = str(args[0]) if args else None

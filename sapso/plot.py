@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from matplotlib import ticker
+
 from . import utils
 
 def contour_plot(history, test_func, 
@@ -49,11 +50,11 @@ def contour_plot(history, test_func,
     if not got_axis:
         ax.figure.colorbar(cbar)
 
-    if history['meta']['method_short'] == 'SA':
+    if history['meta']['method'] == 'SA':
         # add all encountered points
         ax.plot(*history['points'].T, '-', color='tab:orange')
 
-    elif history['meta']['method_short'] == 'PSO':
+    elif history['meta']['method'] == 'PSO':
         # randomly select a subset of particles to plot
         subset_size = 3
         selected = np.random.choice(
@@ -82,7 +83,7 @@ def contour_plot(history, test_func,
 
     else:
         raise RuntimeError(
-            f"Plotting for method `{history['meta']['method_short']}` not supported!"
+            f"Plotting for method `{history['meta']['method']}` not supported!"
         )
 
     # add best encountered point

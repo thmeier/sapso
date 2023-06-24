@@ -1,6 +1,7 @@
 import numpy as np
 
 from functools import partial
+
 from . import utils
 from . import base
 
@@ -9,6 +10,26 @@ def default_temperature(it_curr, it_max, temp_max=0.1):
     return max(temp_max * (1 - it_curr / it_max), 1e-7)
 
 class SimulatedAnnealing(base.OptimizationMethod):
+    """
+    Perform simulated annealing optimization on objective function
+
+    input
+    -----
+    objective : function
+        Objective/fitness/cost function, i.e. $\R^n \mapsto \R$,
+        where $n$ is the dimensionality of the optimization problem.
+
+    area : numpy.ndarray
+        Bounding hypercube of search space, i.e. has shape $(n, 2)$,
+        where $n$ is the dimensionality of the optimization problem.
+        Thus `area` is an array of lower and upper bounds, which equivalently
+        means, `area[i] == [i_min, i_max]`, where `i_min` and `i_max` 
+        denote the lower and upper bound of the i-th component.
+
+    temperature : function | None
+
+    # TODO: finish documentation
+    """
     def __init__(self, 
                  objective, area,
                  iterations=100,
@@ -51,9 +72,7 @@ class SimulatedAnnealing(base.OptimizationMethod):
             'best_point' : self.p_best, # TODO: rename to best_pos
             # meta information
             'meta'       : {
-                # TODO: remove method, rename method_short to method
-                'method'       : 'simulated_annealing',
-                'method_short' : 'SA',
+                'method'       : 'SA',
                 'params'       : {
                     'iterations' : self.iterations,
                     'seed'       : self.seed,
@@ -122,26 +141,6 @@ class SimulatedAnnealing(base.OptimizationMethod):
 #        step_size=0.1,
 #        goal='min'
 #        ):
-#    """
-#    Perform simulated annealing optimization on objective function
-#
-#    input
-#    -----
-#    objective : function
-#        Objective/fitness/cost function, i.e. $\R^n \mapsto \R$,
-#        where $n$ is the dimensionality of the optimization problem.
-#
-#    area : numpy.ndarray
-#        Bounding hypercube of search space, i.e. has shape $(n, 2)$,
-#        where $n$ is the dimensionality of the optimization problem.
-#        Thus `area` is an array of lower and upper bounds, which equivalently
-#        means, `area[i] == [i_min, i_max]`, where `i_min` and `i_max` 
-#        denote the lower and upper bound of the i-th component.
-#
-#    temperature : function | None
-#
-#    # TODO: finish documentation
-#    """
 #
 #    # SETUP #------------------------------------------------------------------#
 #

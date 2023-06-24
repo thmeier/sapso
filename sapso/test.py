@@ -6,8 +6,8 @@ These allow to nicely plot and investigate optimization algorithms.
 
 import numpy as np
 
-# abstract base class for implementing interface
 from abc import ABC, abstractmethod
+
 from . import utils
 
 

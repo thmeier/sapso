@@ -137,7 +137,7 @@ def comparison_funcs_from_goal(goal):
 
 def title_from_history(history, test_func, title_length='long'):
     testf      = test_func.name
-    method     = history['meta']['method_short']
+    method     = history['meta']['method']
     params     = history['meta']['params']
     iterations = params['iterations']
     seed       = params['seed']
@@ -175,7 +175,7 @@ def print_results(history, test_func, end='\n'):
         pos_str += f'{pos} | '
     pos_str = pos_str.rstrip(' | ')
 
-    print(f"optimum - {history['meta']['method_short']} @ {test_func.name}:", end='\n\n')
+    print(f"optimum - {history['meta']['method']} @ {test_func.name}:", end='\n\n')
     print(f"* found    : pos: {history['best_point']}")
     print(f"           : val: {history['best_val']}", end='\n\n')
     print(f"* expected : pos: {pos_str}")
