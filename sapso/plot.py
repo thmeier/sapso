@@ -72,15 +72,6 @@ def contour_plot(history, test_func,
 
             ax.plot(*points.T, 'o', color=pick_color(particle))
 
-            #print(f'VERBOSE: history["particle_id"].shape = {history["particle_id"].shape}')
-            #print(f'VERBOSE: history["points"].shape = {history["points"].shape}')
-            #print(f'VERBOSE: mask.shape = {mask.shape}, any = {np.any(mask)}')
-            #print(f'VERBOSE: points.shape = {points.shape}')
-
-            #print(f'VERBOSE: history["points"] = \n{history["points"]}')
-            #print(f'VERBOSE: particle id = {particle}')
-            #print(f'VERBOSE: points = \n{points[:100,:]}')
-
     else:
         raise RuntimeError(
             f"Plotting for method `{history['meta']['method']}` not supported!"
