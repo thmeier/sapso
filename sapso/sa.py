@@ -56,11 +56,10 @@ class SimulatedAnnealing(base.OptimizationMethod):
         # track history of encountered points
         self.history = {'points': [], 'values': []}
 
-    #TODO: rename input variables
-    def _update_history(self, p_new, f_new):
+    def _update_history(self, pos, val):
         # keep track of point and value
-        self.history['points'].append(p_new)
-        self.history['values'].append(f_new)
+        self.history['points'].append(pos)
+        self.history['values'].append(val)
 
     def _finalize_history(self):
         # ensure the history uses numpy arrays, facilitates plotting with matplotlib
@@ -68,8 +67,8 @@ class SimulatedAnnealing(base.OptimizationMethod):
             # results
             'points'     : np.array(self.history['points']),
             'values'     : np.array(self.history['values']),
-            'best_val'   : self.f_best, # TODO: rename to best_val
-            'best_point' : self.p_best, # TODO: rename to best_pos
+            'best_val'   : self.best_val,
+            'best_point' : self.best_pos,
             # meta information
             'meta'       : {
                 'method'       : 'SA',
@@ -86,154 +85,44 @@ class SimulatedAnnealing(base.OptimizationMethod):
     def optimize(self):
 
         # create and evaluate initial point inside bounding hyper cube `area`
-        p_curr = utils.uniform(self.area)
-        f_curr = self.objective(*p_curr)
+        curr_pos = utils.uniform(self.rng, self.area)
+        curr_val = self.objective(*curr_pos)
 
-        # TODO RENAME
-        # track best candidate and its value
-        self.p_best, self.f_best = p_curr, f_curr
+        self.best_pos, self.best_val = curr_pos, curr_val
 
         self._reset_history()
 
-        for i in range(1, self.iterations+1):
+        for i in range(self.iterations):
 
-            # TODO: use self.rng.uniform?
-            # for each dimension,
-            # choose a direction between -1 and 1 and scale by step
-            p_delta = (np.random.rand(self.n) * 2 - np.ones(self.n)) * self.params.step
+            # choose a random direction between -1 and 1 and scale by step
+            delta = (self.rng.random(self.n) * 2 - np.ones(self.n)) * self.params.step
 
-            # clips i-th value into interval area[i, :]
-            p_new = np.clip(p_curr + p_delta, *self.area.T)
+            # clips k-th value into interval area[k, :]
+            new_pos = np.clip(curr_pos + delta, *self.area.T)
 
-            f_new = self.objective(*p_new)
+            new_val = self.objective(*new_pos)
 
-            self._update_history(p_new, f_new)
+            self._update_history(new_pos, new_val)
 
             # local improvement?
-            if np.less(f_new, f_curr):
+            if np.less(new_val, curr_val):
 
                 # remember locally best point and value
-                p_curr, f_curr = p_new, f_new
+                curr_pos, curr_val = new_pos, new_val
 
                 # global improvement?
-                if np.less(f_new, self.f_best):
+                if np.less(new_val, self.best_val):
 
                     # remember globally best point and value
-                    self.p_best, self.f_best = p_new, f_new
+                    self.best_pos, self.best_val = new_pos, new_val
 
             # TODO: make use of rng
             # accept worse point with temperatue-dependent Boltzmann-like probability
-            elif np.random.rand() < np.exp(-np.abs(f_new - self.f_best) / self.params.temperature(i)):
+            elif self.rng.random() < np.exp(-np.abs(new_val - self.best_val) / self.params.temperature(i+1)):
 
                 # remember worse point and value
-                p_curr, f_curr = p_new, f_new
+                curr_pos, curr_val = new_pos, new_val
 
         self._finalize_history()
 
         return self.history
-
-# NOTE: LEGACY CODE - WILL BE REMOVED
-#def simulated_annealing(
-#        objective, area,
-#        iterations=5000,
-#        seed=42,
-#        temperature=None,
-#        step_size=0.1,
-#        goal='min'
-#        ):
-#
-#    # SETUP #------------------------------------------------------------------#
-#
-#    # validates if area is in correct format
-#    area = utils.validate_area(area)
-#
-#    # extract dimensions
-#    n, _ = area.shape
-#
-#    # use default temperature cooling scheme if not specified
-#    if temperature is None:
-#        temperature = partial(default_temperature, it_max=iterations)
-#
-#    goal = utils.validate_goal(goal)
-#    better, _, _ = utils.comparison_funcs_from_goal(goal)
-#
-#    # INIT #-------------------------------------------------------------------#
-#
-#    # set seed for reproducibility
-#    np.random.seed(seed)
-#
-#    # make step area-independent
-#    step = step_size * np.min(np.diff(area))
-#
-#    # create and evaluate initial point inside bounding hyper cube `area`
-#    p_curr = utils.uniform(area)
-#    f_curr = objective(*p_curr)
-#
-#    # track best candidate and its value
-#    p_best, f_best = p_curr, f_curr
-#
-#    # track history of encountered points
-#    history = {'points': [], 'values': []}
-#
-#    # SA #---------------------------------------------------------------------#
-#
-#    for i in range(1, iterations+1):
-#
-#        # UPDATE #-------------------------------------------------------------#
-#
-#        # for each dimension,
-#        # choose a direction between -1 and 1 and scale by step
-#        p_delta = (np.random.rand(n) * 2 - np.ones(n)) * step
-#
-#        # calculate and evaluate new candidate point
-#        p_new = p_curr + p_delta
-#        # clips i-th value of p_new into interval area[i, :]
-#        p_new = np.clip(p_new, *area.T)
-#
-#        f_new = objective(*p_new)
-#
-#        # keep track of point and value
-#        history['points'].append(p_new)
-#        history['values'].append(f_new)
-#
-#        # local improvement?
-#        if better(f_new, f_curr):
-#
-#            # remember locally best point and value
-#            p_curr, f_curr = p_new, f_new
-#
-#            # global improvement?
-#            if better(f_new, f_best):
-#
-#                # remember globally best point and value
-#                p_best, f_best = p_new, f_new
-#
-#        # accept worse point with temperatue-dependent Boltzmann-like probability
-#        elif np.random.rand() < np.exp(-np.abs(f_new - f_best) / temperature(i)):
-#
-#            # remember worse point and value
-#            p_curr, f_curr = p_new, f_new
-#
-#    # ensure the history uses numpy arrays, facilitates plotting with matplotlib
-#    history = {
-#        # results
-#        'points'     : np.array(history['points']),
-#        'values'     : np.array(history['values']),
-#        'best_point' : p_best,
-#        'best_val'   : f_best,
-#        # meta information
-#        'meta'       : {
-#            'method'       : 'simulated_annealing',
-#            'method_short' : 'SA',
-#            'params'       : {
-#                'iterations' : iterations,
-#                'seed'       : seed,
-#                'goal'       : goal,
-#                'step_size'  : step_size,
-#                'step'       : step
-#            },
-#        },
-#    }
-#
-#    # return best encountered point, value and history of points
-#    return history
