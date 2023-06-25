@@ -24,7 +24,7 @@ def normalize(v):
     return n
 
 # TODO: check with rng.uniform(low=,high=,size=)
-def uniform(area):
+def uniform(rng, area):
     """
     Compute a n-dimensional random vector,
     where each component is uniformly distributed
@@ -42,7 +42,7 @@ def uniform(area):
         has shape $(n,)$
         where the i-th component is uniformly distributed between area[i, :]
     """
-    u = area[:, 0] + np.random.rand(area.shape[0]) * (area[:, 1] - area[:, 0])
+    u = area[:, 0] + rng.random(area.shape[0]) * (area[:, 1] - area[:, 0])
     return u
 
 def validate_area(area):
