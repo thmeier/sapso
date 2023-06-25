@@ -30,7 +30,7 @@ class Particle:
 
         # position and value of particle in $R^n$ and $R$
         # TODO(HIGH): make utils.uniform take self.rng to generate numbers
-        self.pos = utils.uniform(area)
+        self.pos = utils.uniform(self.owner.rng, area)
         self.val = self.objective(*self.pos)
 
         # individual best position and corresponding value
@@ -44,11 +44,11 @@ class Particle:
         # velocity of particle in R^n
         # initialization according to wikipedia
         # https://en.wikipedia.org/wiki/Particle_swarm_optimization#Algorithm
-        self.vel = utils.uniform(np.hstack([-np.diff(area), np.diff(area)]))
+        self.vel = utils.uniform(self.owner.rng, np.hstack([-np.diff(area), np.diff(area)]))
 
     def update(self):
-        r_ind = np.random.rand(self.n)
-        r_neigh = np.random.rand(self.n)
+        r_ind = self.owner.rng.random(self.n)
+        r_neigh = self.owner.rng.random(self.n)
 
         dir_best_ind = utils.normalize(self.pos_best_ind - self.pos)
         dir_best_neigh = utils.normalize(self.pos_best_neigh - self.pos)
