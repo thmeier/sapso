@@ -110,3 +110,58 @@ class Eggholder(Testfunction2D):
         out = -y * np.sin(np.sqrt(np.abs(x / 2 + y))) 
         out -= x * np.sin(np.sqrt(np.abs(x - y)))
         return out
+
+class CrossInTray(Testfunction2D):
+    def __init__(self):
+        super().__init__(
+            name='Cross-in-tray',
+            area=np.array([[-10., 10.], [-10., 10.]]),
+            opt_val=-2.06261,
+            opt_pos=np.array([
+                (1.34941, 1.34941),
+                (1.34941, -1.34941),
+                (-1.34941, 1.34941),
+                (-1.34941, -1.34941),
+            ]),
+        )
+
+    def objective(self, x, y):
+        out = np.exp(np.abs(100 - np.sqrt(x**2 + y**2) / np.pi))
+        out = np.abs(np.sin(x) * np.sin(y) * out) + 1
+        out = -0.0001 * np.power(out, 0.1)
+        return out
+
+class SchaffnerNo2(Testfunction2D):
+    def __init__(self):
+        super().__init__(
+            name='Schaffner-No2',
+            area=np.array([[-100., 100.], [-100., 100.]]),
+            opt_val=0.,
+            opt_pos=np.array([
+                (0., 0.)
+            ])
+        )
+
+    def objective(self, x, y):
+        out = np.sin(x**2 - y**2)**2 - 0.5
+        out = out / (1 + 0.001 * (x**2 + y**2))**2 + 0.5
+        return out
+
+class SchaffnerNo4(Testfunction2D):
+    def __init__(self):
+        super().__init__(
+            name='Schaffner-No4',
+            area=np.array([[-100., 100.], [-100., 100.]]),
+            opt_val=0.292579,
+            opt_pos=np.array([
+                (0., 1.25313)
+                (0., -1.25313)
+                (1.25313, 0.)
+                (-1.25313, 0.)
+            ])
+        )
+
+    def objective(self, x, y):
+        out = np.cos(np.sin(np.abs(x**2 - y**2)))**2 - 0.5
+        out = out / (1 + 0.001 * (x**2 + y**2))**2 + 0.5
+        return out
