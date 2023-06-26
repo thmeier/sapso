@@ -10,8 +10,8 @@ Optimization Methods for Engineers Project (Spring Semester 23)
 - [ ] clean up TODOs in code
 * [ ] Combination SA PSO implementation - debug with plots
 * [ ] search suitable testing functions
-* [ ] implement plot comparing different optimization methods
-* [ ] stylize plots coherently for report
+* [x] implement plot comparing different optimization methods
+* [x] stylize plots coherently for report
 * [ ] write report
 
 ## Ideas for Report
