@@ -2,12 +2,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from matplotlib import ticker
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 from . import utils
+from . import sa
+from . import pso
 
 def contour_plot(history, test_func, 
                  resolution=100, ax=None, title=None, title_length='long',
-                 cmap_bg='bone', cmap_fg='tab20'
+                 cmap_bg='bone', cmap_fg='tab20', save=False, path=''
                  ):
     """
     Plots a 2D contour plot of the objective function `objective` over the region `area`.
@@ -70,7 +73,7 @@ def contour_plot(history, test_func,
             mask = history['particle_id'] == particle
             points = history['points'][mask]
 
-            ax.plot(*points.T, 'o', color=pick_color(particle))
+            ax.plot(*points.T, 'o', color=pick_color(particle), ms=2)
 
     else:
         raise RuntimeError(
@@ -94,3 +97,52 @@ def contour_plot(history, test_func,
     # let caller handle plotting of colorbar if the axis was specified
     if got_axis:
         return cbar
+
+    if save:
+        plt.savefig(path)
+
+def comparison_plot(test_funcs, methods, kw_method, kw_plot, save=False, path=''):
+    n, m = len(methods), len(test_funcs)
+    fig, axes = plt.subplots(n, m, figsize=(m*2, n*2))#, layout='constrained')#, figsize=(n*2,m*2))
+
+    for i, (method_name, kw) in enumerate(zip(methods, kw_method)):
+        for j, tfunc in enumerate(test_funcs):
+
+            if method_name == 'SA':
+                method = sa.SimulatedAnnealing
+            elif method_name == 'PSO':
+                method = pso.ParticleSwarmOptimization
+            #elif method_name == 'APSO':
+            #    raise NotImplementedError('Adaptive PSO not yet implemented!')
+            else:
+                raise ValueError(f'Method `{method}` not recognized!')
+
+            experiment = method(tfunc.objective, tfunc.area, **kw)
+            history = experiment.optimize()
+            utils.print_results(history, tfunc, end='\n\n')
+
+            cax = contour_plot(history, tfunc, ax=axes[i, j], **kw_plot)
+
+    cax_min, cax_max = np.min(cax.cvalues), np.max(cax.cvalues)
+    cbar_ticks = [cax_min, 0.5 * (cax_min + cax_max), cax_max]
+
+    cbar = fig.colorbar(cax, ax=axes[:,-1], ticks=cbar_ticks, pad=1.0)
+
+    cbar.ax.set_yticklabels(
+        ['min', 'median', 'max'], va='center', rotation='vertical'
+    )
+
+    xlabels = [ tfunc.name for tfunc in test_funcs ] +  [''] * (n-1) * m
+    ylabels = np.array([
+        [method] + [''] * (m-1) for method in methods
+    ]).flatten()
+
+    for ax, method, tfun in zip(axes.flat, xlabels, ylabels):
+        # set labels only for left/bottom-most subplots
+        ax.set(xlabel=method, ylabel=tfun, aspect=1.0, xticks=[], yticks=[]) 
+        ax.xaxis.set_label_position('top')
+
+    plt.subplots_adjust(bottom=0.1, top=0.9, left=0.1, right=0.865)
+
+    if save:
+        plt.savefig(path)
