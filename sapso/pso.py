@@ -26,8 +26,6 @@ class Particle:
         # social coefficient (i.e. group behaviour), typically in [1, 3]
         self.a_neigh = a_neigh
 
-        # TODO(LOW): could be optimized but needs attention to not coupple variables together!
-
         self.pos = utils.uniform(self.owner.rng, area)
         self.val = self.objective(*self.pos)
 
