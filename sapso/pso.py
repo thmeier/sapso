@@ -76,13 +76,13 @@ class Particle:
 class ParticleSwarmOptimization(base.OptimizationMethod):
     def __init__(self,
                  objective, area,
-                 iterations=100,
+                 iterations=1000,
                  seed=42,
-                 n_particles=10,
-                 w=0.75,          # inertial decay,        in [0,1)
-                 a_ind=1,         # cognitive coefficient, in [1,3]
-                 a_neigh=2,       # social coefficient,    in [1,3]
-                 goal='min'       # optimization goal,     in ['min', 'max']
+                 n_particles=100,
+                 w=0.75,           # inertial decay,        in [0,1)
+                 a_ind=1.0,        # cognitive coefficient, in [1,3]
+                 a_neigh=1.6,      # social coefficient,    in [1,3]
+                 goal='min'        # optimization goal,     in ['min', 'max']
                  ):
         super().__init__(objective, area, iterations, seed, goal)
         # counter for generating increasing Particle IDs (relative to self)
