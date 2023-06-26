@@ -32,13 +32,12 @@ class SimulatedAnnealing(base.OptimizationMethod):
     """
     def __init__(self, 
                  objective, area,
-                 iterations=100,
+                 iterations=1000,
                  seed=42,
                  temperature=None,
                  step_size=0.1,
                  goal='min'
                  ):
-        # f
         super().__init__(objective, area, iterations, seed, goal)
 
         # use default temperature cooling scheme if not specified
