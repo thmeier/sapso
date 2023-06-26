@@ -5,12 +5,10 @@
 """
 
 import numpy as np
-import matplotlib.pyplot as plt
 
 from abc import ABC, abstractmethod 
 
 from . import utils
-from . import plot
 
 class OptimizationMethod(ABC):
     """
@@ -25,9 +23,6 @@ class OptimizationMethod(ABC):
 
     optimize : abstractmethod
         perform actual optimization
-
-    plot : function
-        polymorphically plot the results given the history returned by optimize
     """
 
     def __init__(self, objective, area, iterations, seed, goal='min'):
