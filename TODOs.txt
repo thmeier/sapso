@@ -1,13 +1,3 @@
-    # TODO(LOW): add docstring with input, methods and properties
-        # TODO(LOW): could be optimized but needs attention to not coupple variables together!
-        # TODO(HIGH): make utils.uniform take self.rng to generate numbers
-        # TODO(LOW): adapt Particle() to only take params and extract themselves?
-    # TODO: finish documentation
-        self.params.step_size = step_size # TODO: validate step_size in [0,1]
-    #TODO: rename input variables
-            'best_val'   : self.f_best, # TODO: rename to best_val
-            'best_point' : self.p_best, # TODO: rename to best_pos
-        # TODO RENAME
-            # TODO: use self.rng.uniform?
-            # TODO: make use of rng
-# TODO: check with rng.uniform(low=,high=,size=)
+    # TODO(LOW): add Particle docstring
+    # TODO(LOW): add PSO docstring
+    # TODO(low): finish SA documentation
