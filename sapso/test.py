@@ -134,7 +134,7 @@ class CrossInTray(Testfunction2D):
 class SchaffnerNo2(Testfunction2D):
     def __init__(self):
         super().__init__(
-            name='Schaffner-No2',
+            name='Schaffner No2',
             area=np.array([[-100., 100.], [-100., 100.]]),
             opt_val=0.,
             opt_pos=np.array([
@@ -150,7 +150,7 @@ class SchaffnerNo2(Testfunction2D):
 class SchaffnerNo4(Testfunction2D):
     def __init__(self):
         super().__init__(
-            name='Schaffner-No4',
+            name='Schaffner No4',
             area=np.array([[-100., 100.], [-100., 100.]]),
             opt_val=0.292579,
             opt_pos=np.array([
