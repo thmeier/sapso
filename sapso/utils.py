@@ -23,7 +23,6 @@ def normalize(v):
     n = v / (np.linalg.norm(v) + 1e-7)
     return n
 
-# TODO: check with rng.uniform(low=,high=,size=)
 def uniform(rng, area):
     """
     Compute a n-dimensional random vector,

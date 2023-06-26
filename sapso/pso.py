@@ -6,7 +6,7 @@ from . import base
 
 
 class Particle:
-    # TODO(LOW): add docstring with input, methods and properties
+    # TODO(LOW): add Particle docstring
 
     def __init__(self, owner, objective, area, w, a_ind, a_neigh):
         # owner of particle, self.id is relative to owner
@@ -28,8 +28,6 @@ class Particle:
 
         # TODO(LOW): could be optimized but needs attention to not coupple variables together!
 
-        # position and value of particle in $R^n$ and $R$
-        # TODO(HIGH): make utils.uniform take self.rng to generate numbers
         self.pos = utils.uniform(self.owner.rng, area)
         self.val = self.objective(*self.pos)
 
@@ -74,6 +72,7 @@ class Particle:
 
 
 class ParticleSwarmOptimization(base.OptimizationMethod):
+    # TODO(LOW): add PSO docstring
     def __init__(self,
                  objective, area,
                  iterations=1000,
@@ -98,7 +97,6 @@ class ParticleSwarmOptimization(base.OptimizationMethod):
         # attraction towards neighbour best
         self.params.a_neigh = a_neigh
 
-        # TODO(LOW): adapt Particle() to only take params and extract themselves?
         self.particles = [
             Particle(self, self.objective, self.area, self.params.w, self.params.a_ind, self.params.a_neigh)
             for _ in range(n_particles)

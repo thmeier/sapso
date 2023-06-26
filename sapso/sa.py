@@ -28,7 +28,7 @@ class SimulatedAnnealing(base.OptimizationMethod):
 
     temperature : function | None
 
-    # TODO: finish documentation
+    # TODO(low): finish SA documentation
     """
     def __init__(self, 
                  objective, area,
@@ -46,7 +46,7 @@ class SimulatedAnnealing(base.OptimizationMethod):
 
         self.params = base.Params()
         self.params.temperature = temperature
-        self.params.step_size = step_size # TODO: validate step_size in [0,1]
+        self.params.step_size = step_size
 
         # make step area-independent
         self.params.step = self.params.step_size * np.min(np.diff(self.area))
@@ -115,8 +115,6 @@ class SimulatedAnnealing(base.OptimizationMethod):
                     # remember globally best point and value
                     self.best_pos, self.best_val = new_pos, new_val
 
-            # TODO: make use of rng
-            # accept worse point with temperatue-dependent Boltzmann-like probability
             elif self.rng.random() < np.exp(-np.abs(new_val - self.best_val) / self.params.temperature(i+1)):
 
                 # remember worse point and value
