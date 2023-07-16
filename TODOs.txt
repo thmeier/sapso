@@ -1,3 +1,8 @@
+# TODO(low): add args and kwargs to support generic temperature functions
+    # TODO(LOW): add Particle docstring
+    # TODO(LOW): add PSO docstring
     # TODO(LOW): add Particle docstring
     # TODO(LOW): add PSO docstring
     # TODO(low): finish SA documentation
+    TODO(low): clean up code
+        # TODO: make wrapped_class not dependent on mro which only comes by extending abc.ABC, works for the moment
