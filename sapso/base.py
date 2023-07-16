@@ -10,6 +10,8 @@ from abc import ABC, abstractmethod
 
 from . import utils
 
+__all__ = ['OptimizationMethod', 'Params']
+
 class OptimizationMethod(ABC):
     """
     Abstract base class (ABC) that specifies the interface for an optimization
@@ -101,4 +103,3 @@ class Params(object):
         ks = self.__dict__.keys()
         return len([k for k in ks if not k.startswith('__')\
                     and not isinstance(k, Params)])
-
