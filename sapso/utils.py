@@ -5,6 +5,11 @@ Utility functions that abstract away unnecessary details.
 import numpy as np
 import matplotlib as mpl
 
+__all__ = [
+    'normalize', 'uniform', 'validate_area', 'validate_goal', 
+    'comparison_funcs_from_goal', 'title_from_history', 'print_results', 
+    'colors_from_cmap'
+]
 
 def normalize(v):
     """
