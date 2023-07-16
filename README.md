@@ -7,14 +7,31 @@ Optimization Methods for Engineers Project (Spring Semester 23)
 * [x] SA implementation - debug with plots
 * [x] PSO implementation - debug with plots
 - [x] PSO code clean up
-- [ ] clean up TODOs in code
+- [x] clean up TODOs in code
 * [ ] Combination SA PSO implementation - debug with plots
-* [ ] search suitable testing functions
+* [x] search suitable testing functions
 * [x] implement plot comparing different optimization methods
 * [x] stylize plots coherently for report
 * [ ] write report
 
 ## Ideas for Report
+
+- explicitly conform to report structure as specified by professor!
+- forge report with *quality over quantity*
+    - why did we do stuff 
+    - nice concise plot legends
+    - simple + few sentences
+
+- statistical plots
+    - time measurements (how long optimization methods take)
+    - what percentage of the search space do optimization methods explore
+
+- show strengths & weaknesses / limitations
+    - SA
+    - PSO
+    - SAPSO
+
+---
 
 - run experiments multiple times with different seeds
     - calculate average difference between 
@@ -53,21 +70,6 @@ Optimization Methods for Engineers Project (Spring Semester 23)
             - maybe connect points by arrows / lines
     - SA:
         - similarly to PSO, bring history of temperature in via alpha channel
-
-- explicitly conform to report structure as specified by professor!
-- forge report with *quality over quantity*
-    - why did we do stuff 
-    - nice concise plot legends
-    - simple + few sentences
-
-- statistical plots
-    - time measurements (how long optimization methods take)
-    - what percentage of the search space do optimization methods explore
-
-- show strengths & weaknesses / limitations
-    - SA
-    - PSO
-    - SAPSO
 
 - don't explain inner workings of SA & PSO
     - professor knows how they work
