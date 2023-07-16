@@ -5,9 +5,30 @@ from functools import partial
 from . import utils
 from . import base
 
+__all__ = ['default_temperature', 'SimulatedAnnealing']
 
-def default_temperature(it_curr, it_max, temp_max=0.1):
-    return max(temp_max * (1 - it_curr / it_max), 1e-7)
+
+def default_temperature(time):
+    """
+    Default temperature cooling scheme to use.
+
+    input
+    -----
+
+    time : float
+        Fraction of time passed, in [0, 1]
+    """
+    return temperature_exp(time)
+
+def temperature_lin(time):
+    return np.clip(
+        1.0 - time
+    , 1e-7, 1.0)
+
+def temperature_exp(time):
+    return np.clip(
+        np.exp(-4 * time + 1) / np.e
+    , 1e-7, 1.0)
 
 class SimulatedAnnealing(base.OptimizationMethod):
     """
@@ -30,25 +51,25 @@ class SimulatedAnnealing(base.OptimizationMethod):
 
     # TODO(low): finish SA documentation
     """
-    def __init__(self, 
+    def __init__(self,
                  objective, area,
-                 iterations=1000,
+                 iterations=5000,
                  seed=42,
                  temperature=None,
-                 step_size=0.1,
+                 step_size=0.2,
                  goal='min'
                  ):
         super().__init__(objective, area, iterations, seed, goal)
 
         # use default temperature cooling scheme if not specified
         if temperature is None:
-            temperature = partial(default_temperature, it_max=iterations)
+            temperature = default_temperature
 
         self.params = base.Params()
         self.params.temperature = temperature
         self.params.step_size = step_size
 
-        # make step area-independent
+        # make step_size area-independent
         self.params.step = self.params.step_size * np.min(np.diff(self.area))
 
     def _reset_history(self):
@@ -115,7 +136,9 @@ class SimulatedAnnealing(base.OptimizationMethod):
                     # remember globally best point and value
                     self.best_pos, self.best_val = new_pos, new_val
 
-            elif self.rng.random() < np.exp(-np.abs(new_val - self.best_val) / self.params.temperature(i+1)):
+            elif self.rng.random() < np.exp(
+                -np.abs(new_val - self.best_val) / self.params.temperature(i / self.iterations)
+            ):
 
                 # remember worse point and value
                 curr_pos, curr_val = new_pos, new_val
