@@ -8,11 +8,11 @@ Optimization Methods for Engineers Project (Spring Semester 23)
 * [x] PSO implementation - debug with plots
 - [x] PSO code clean up
 - [x] clean up TODOs in code
-* [ ] Combination SA PSO implementation - debug with plots
+* [x] Combination SA PSO implementation - debug with plots
 * [x] search suitable testing functions
 * [x] implement plot comparing different optimization methods
 * [x] stylize plots coherently for report
-* [ ] write report
+* [x] write report
 
 ## Ideas for Report
 
@@ -30,8 +30,6 @@ Optimization Methods for Engineers Project (Spring Semester 23)
     - SA
     - PSO
     - SAPSO
-
----
 
 - run experiments multiple times with different seeds
     - calculate average difference between 
