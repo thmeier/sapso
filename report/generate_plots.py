@@ -301,7 +301,7 @@ def main():
             'APSO' : {
                 'implementation' : sapso.pso.AdaptiveParticleSwarmOptimization,
                 'params' : {
-                    'iterations'    : 500,
+                    'iterations'    : 400,
                     'n_particles'   : 200,
                     'w'             : 0.75,
                     'a_ind'         : 1.0,
