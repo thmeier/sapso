@@ -101,14 +101,18 @@
 
     \begin{column}{0.6\textwidth}
         \begin{verbatim}
-        # PSO velocity update rule
+        # APSO velocity update rule
         velocity = (
             # inertial component
-            w * velocity
+            w * velocity,
             # self best component
-            + a_self * r_self * dir_best_self
+            a_self * r_self * dir_best_self,
             # swarm best component
-            + a_swarm * r_swarm * dir_best_swarm
+            a_swarm * r_swarm * dir_best_swarm
+        )
+
+        velocity = dot_product(
+            velocity, component_weights
         )
         \end{verbatim}
     \end{column}
@@ -138,11 +142,6 @@
                 \item \textbf{component 1}: self best component
                 \item \textbf{component 2}: swarm best component
             \end{itemize}
-            %\smallskip
-            %\item APSO algorithm:
-            %\begin{itemize}
-            %    \item PSO except with weighting of each component by the respective cubic polynomial
-            %\end{itemize}
         \end{itemize}
     \end{column}
 
@@ -157,73 +156,16 @@
 % SLIDE
 %
 
-\begin{frame}[fragile]{APSO = SA $\times$ PSO}
+\begin{frame}[fragile]{APSO - Additional Adaptive Schemes}
+    Additionally, cubic and exponential interpolation methods are also investigated.
+    \smallskip
     \begin{columns}
-    \begin{column}{0.5\textwidth}
-
-        \begin{itemize}
-            \item \textbf{phase 0}: global exploration phase\\
-                {\scriptsize{\textit{Agents explore the optimization landscape individually while not being drawn to one another.}}}
-            \item \textbf{phase 1}: local exploration phase\\
-                {\scriptsize{\textit{Agents focus on exploring their own best encountered optimum.}}}
-
-            \item \textbf{phase 2}: optimum finding phase\\
-                {\scriptsize{\textit{All agents focus on exploring the best encountered swarm optimum.}}}
-            \smallskip
-            \item velocity update components
-            \begin{itemize}
-                \item \textbf{component 0}: inertial component
-                \item \textbf{component 1}: self best component
-                \item \textbf{component 2}: swarm best component
-            \end{itemize}
-            %\smallskip
-            %\item APSO algorithm:
-            %\begin{itemize}
-            %    \item PSO except with weighting of each component by the respective cubic polynomial
-            %\end{itemize}
-        \end{itemize}
-    \end{column}
-
-    \begin{column}{0.45\textwidth}
+    \begin{column}{0.4\textwidth}
         \includegraphics[width=\columnwidth]{../plots/apso_velocity_component_weighting__cubic.pdf}
         \captionof{ }{\tiny{Cubic adaptive velocity component weighting.}}
     \end{column}
-    \end{columns}
-\end{frame}
 
-%
-% SLIDE
-%
-
-\begin{frame}[fragile]{APSO = SA $\times$ PSO}
-    \begin{columns}
-    \begin{column}{0.5\textwidth}
-
-        \begin{itemize}
-            \item \textbf{phase 0}: global exploration phase\\
-                {\scriptsize{\textit{Agents explore the optimization landscape individually while not being drawn to one another.}}}
-            \item \textbf{phase 1}: local exploration phase\\
-                {\scriptsize{\textit{Agents focus on exploring their own best encountered optimum.}}}
-
-            \item \textbf{phase 2}: optimum finding phase\\
-                {\scriptsize{\textit{All agents focus on exploring the best encountered swarm optimum.}}}
-
-            \smallskip
-            \item velocity update components
-            \begin{itemize}
-                \item \textbf{component 0}: inertial component
-                \item \textbf{component 1}: self best component
-                \item \textbf{component 2}: swarm best component
-            \end{itemize}
-            %\smallskip
-            %\item APSO algorithm:
-            %\begin{itemize}
-            %    \item PSO except with weighting of each component by the respective cubic polynomial
-            %\end{itemize}
-        \end{itemize}
-    \end{column}
-
-    \begin{column}{0.45\textwidth}
+    \begin{column}{0.4\textwidth}
         \includegraphics[width=\columnwidth]{../plots/apso_velocity_component_weighting__exp.pdf}
         \captionof{ }{\tiny{Exponential adaptive velocity component weighting.}}
     \end{column}
