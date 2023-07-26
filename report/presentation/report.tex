@@ -415,329 +415,6 @@
     \end{columns}
 
 \end{frame}
-%
-% SLIDE
-%
-
-\begin{frame}{Sensitivity Study - Simulated Annealing}
-    \framesubtitle{varying \textbf{number of iterations}}
-
-    \begin{columns}
-    \begin{column}{0.8\textwidth}
-        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__SA_iterations.pdf}
-    \end{column}
-    \end{columns}
-
-    \begin{columns}
-        \begin{column}{0.8\textwidth}
-            $\implies$ optimal parameter range $\approx 1000-5000$ iterations
-        \end{column}
-        \begin{column}{0.1\textwidth}
-            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
-        \end{column}
-    \end{columns}
-
-\end{frame}
-
-%
-% SLIDE
-%
-
-\begin{frame}{Sensitivity Study - Simulated Annealing}
-    \framesubtitle{varying \textbf{step size} (in \% relative to search space)}
-
-    \begin{columns}
-    \begin{column}{0.8\textwidth}
-        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__SA_step_size.pdf}
-    \end{column}
-    \end{columns}
-
-    \begin{columns}
-        \begin{column}{0.8\textwidth}
-            $\implies$ optimal parameter range, step size $\approx 10$\%$-40$\% of search space
-        \end{column}
-        \begin{column}{0.1\textwidth}
-            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
-        \end{column}
-    \end{columns}
-
-\end{frame}
-
-%
-% SLIDE
-%
-
-\begin{frame}{Sensitivity Study - Simulated Annealing}
-    \framesubtitle{varying \textbf{temperature decay type}}
-
-    \begin{columns}
-    \begin{column}{0.8\textwidth}
-        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__SA_temperature.pdf}
-    \end{column}
-    \end{columns}
-
-    \begin{columns}
-        \begin{column}{0.8\textwidth}
-            $\implies$ negligible effect, keep as is
-        \end{column}
-        \begin{column}{0.1\textwidth}
-            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-%
-% SLIDE
-%
-
-\begin{frame}{Sensitivity Study - Particle Swarm Optimization}
-    \framesubtitle{varying \textbf{number of iterations}}
-
-    \begin{columns}
-    \begin{column}{0.8\textwidth}
-        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__PSO_iterations.pdf}
-    \end{column}
-    \end{columns}
-
-    \begin{columns}
-        \begin{column}{0.8\textwidth}
-            $\implies$ optimal parameter range $\approx 100-1000$ iterations
-        \end{column}
-        \begin{column}{0.1\textwidth}
-            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-%
-% SLIDE
-%
-
-\begin{frame}{Sensitivity Study - Particle Swarm Optimization}
-    \framesubtitle{varying \textbf{number of particles}}
-
-    \begin{columns}
-    \begin{column}{0.8\textwidth}
-        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__PSO_n_particles.pdf}
-    \end{column}
-    \end{columns}
-
-    \begin{columns}
-        \begin{column}{0.8\textwidth}
-            $\implies$ optimal parameter range $\approx 100-300$ particles
-        \end{column}
-        \begin{column}{0.1\textwidth}
-            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-%
-% SLIDE
-%
-
-\begin{frame}{Sensitivity Study - Particle Swarm Optimization}
-    \framesubtitle{varying \textbf{inertial decay factor}}
-
-    \begin{columns}
-    \begin{column}{0.8\textwidth}
-        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__PSO_w.pdf}
-    \end{column}
-    \end{columns}
-
-    \begin{columns}
-        \begin{column}{0.8\textwidth}
-            $\implies$ optimal parameter range $\approx 0.6 - 0.8$ inertial decay factor        \end{column}
-        \begin{column}{0.1\textwidth}
-            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-%
-% SLIDE
-%
-
-\begin{frame}{Sensitivity Study - Particle Swarm Optimization}
-    \framesubtitle{varying \textbf{acceleration individual optimum}}
-
-    \begin{columns}
-    \begin{column}{0.8\textwidth}
-        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__PSO_a_ind.pdf}
-    \end{column}
-    \end{columns}
-
-    \begin{columns}
-        \begin{column}{0.8\textwidth}
-            $\implies$ negligible effect, keep as is
-        \end{column}
-        \begin{column}{0.1\textwidth}
-            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-%
-% SLIDE
-%
-
-\begin{frame}{Sensitivity Study - Particle Swarm Optimization}
-    \framesubtitle{varying \textbf{acceleration swarm optimum}}
-
-    \begin{columns}
-    \begin{column}{0.8\textwidth}
-        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__PSO_a_neigh.pdf}
-    \end{column}
-    \end{columns}
-
-    \begin{columns}
-        \begin{column}{0.8\textwidth}
-            $\implies$ negligible effect, keep as is
-        \end{column}
-        \begin{column}{0.1\textwidth}
-            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-%
-% SLIDE
-%
-
-\begin{frame}{Sensitivity Study - Adaptive Particle Swarm Optimization}
-    \framesubtitle{varying \textbf{number of iterations}}
-
-    \begin{columns}
-    \begin{column}{0.8\textwidth}
-        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__APSO_iterations.pdf}
-    \end{column}
-    \end{columns}
-
-    \begin{columns}
-        \begin{column}{0.8\textwidth}
-            $\implies$ negligible effect, $\geq 500$
-        \end{column}
-        \begin{column}{0.1\textwidth}
-            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-%
-% SLIDE
-%
-
-\begin{frame}{Sensitivity Study - Adaptive Particle Swarm Optimization}
-    \framesubtitle{varying \textbf{number of particles}}
-
-    \begin{columns}
-    \begin{column}{0.8\textwidth}
-        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__APSO_n_particles.pdf}
-    \end{column}
-    \end{columns}
-
-    \begin{columns}
-        \begin{column}{0.8\textwidth}
-            $\implies$ negligible effect, $\approx 200$
-        \end{column}
-        \begin{column}{0.1\textwidth}
-            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-%
-% SLIDE
-%
-
-\begin{frame}{Sensitivity Study - Adaptive Particle Swarm Optimization}
-    \framesubtitle{varying \textbf{inertial decay factor}}
-
-    \begin{columns}
-    \begin{column}{0.8\textwidth}
-        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__APSO_w.pdf}
-    \end{column}
-    \end{columns}
-
-    \begin{columns}
-        \begin{column}{0.8\textwidth}
-            $\implies$ optimal parameter range $\approx 0.7 - 0.8$ inertial decay factor
-        \end{column}
-        \begin{column}{0.1\textwidth}
-            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-%
-% SLIDE
-%
-
-\begin{frame}{Sensitivity Study - Adaptive Particle Swarm Optimization}
-    \framesubtitle{varying \textbf{acceleration individual optimum}}
-
-    \begin{columns}
-    \begin{column}{0.8\textwidth}
-        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__APSO_a_ind.pdf}
-    \end{column}
-    \end{columns}
-
-    \begin{columns}
-        \begin{column}{0.8\textwidth}
-            $\implies$ optimal parameter $1.0$ acceleration towards individual optimum.
-        \end{column}
-        \begin{column}{0.1\textwidth}
-            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-%
-% SLIDE
-%
-
-\begin{frame}{Sensitivity Study - Adaptive Particle Swarm Optimization}
-    \framesubtitle{varying \textbf{acceleration swarm optimum}}
-
-    \begin{columns}
-    \begin{column}{0.8\textwidth}
-        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__APSO_a_neigh.pdf}
-    \end{column}
-    \end{columns}
-
-    \begin{columns}
-        \begin{column}{0.8\textwidth}
-            $\implies$ optimal parameter $2.0$ acceleration towards swarm optimum.
-        \end{column}
-        \begin{column}{0.1\textwidth}
-            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-
-%
-% SLIDE
-%
-
-\begin{frame}{Sensitivity Study - Adaptive Particle Swarm Optimization}
-    \framesubtitle{varying \textbf{interpolation type}}
-
-    \begin{columns}
-    \begin{column}{0.8\textwidth}
-        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__APSO_interpolation.pdf}
-    \end{column}
-    \end{columns}
-
-    \begin{columns}
-        \begin{column}{0.8\textwidth}
-            $\implies$ negligible effect, keep as is (constant)
-        \end{column}
-        \begin{column}{0.1\textwidth}
-            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
-        \end{column}
-    \end{columns}
-\end{frame}
 
 %
 % SLIDE
@@ -749,6 +426,7 @@
     \begin{column}{0.5\textwidth}
         \textbf{Simulated Annealing}
         \begin{itemize}
+            \item The evaluation plots are in the \hyperref[sec:sensitivity_study_sa_appendix]{\textbf{Appendix}}.
             \item The number of iterations is significantly higher w.r.t. (A)PSO due to each SA iteration being much cheaper in terms of computation. A step-size of $20$\% of the search space seems to suit most scenarios, anything above makes too big jumps. The temperature did not have any significant impact on the performance, thus it is kept as it initially was.
         \end{itemize}
 
@@ -784,6 +462,7 @@
     \begin{column}{0.5\textwidth}
         \textbf{Particle Swarm Optimization}
         \begin{itemize}
+            \item The evaluation plots are in the \hyperref[sec:sensitivity_study_pso_appendix]{\textbf{Appendix}}.
             \item In comparison to SA, the number of iterations of PSO are more than tenfold lower however at the expense of computing $200$ times more fitness evaluations per iterations. It seems that a slightly increased attraction towards the swarm optimum helps the convergence of the algorithm.
         \end{itemize}
 
@@ -819,6 +498,7 @@
     \begin{column}{0.5\textwidth}
         \textbf{Adaptive Particle Swarm Optimization}
         \begin{itemize}
+            \item The evaluation plots are in the \hyperref[sec:sensitivity_study_apso_appendix]{\textbf{Appendix}}.
             \item The adaptive weighting of the velocity components favors slighly more iterations and stronger attraction towards the swarm optimum for similar performance as PSO. The different interpolation methods used did not contribute significantly, thus the simplest is kept.
         \end{itemize}
 
@@ -956,6 +636,331 @@
     \begin{itemize}
         \item The hypothesis that APSO would outperform SA and PSO on \texttt{Layeb14} due to taking the best of both worlds, had to be discarded unfortunately. This hypothesis however still holds for the other five benchmark functions, which we deem as partial success. It is equally efficient as PSO but outperforms it in every benchmark. The benchmark plot is visually very interesting as one clearly sees the three phases. Among these phases, a visual trend is noticable, especially in \texttt{Layeb05} and \texttt{Layeb18} where with increasing phases the algorithm clearly finds more and better solutions to the optimization problems. Concluding, one can say that on these problems, APSO clearly outperforms PSO with almost no additional cost, thus the hypothesis at least holds partially. Moreover, further experimentation with the interpolation types and different phases could yield even more success.
     \end{itemize}
+\end{closingframe}
+
+%
+% SLIDE
+%
+
+\begin{closingframe}{Appendix: Sensitivity Study - Simulated Annealing}
+    \label{sec:sensitivity_study_sa_appendix}
+    \framesubtitle{varying \textbf{number of iterations}}
+
+    \begin{columns}
+    \begin{column}{0.8\textwidth}
+        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__SA_iterations.pdf}
+    \end{column}
+    \end{columns}
+
+    \begin{columns}
+        \begin{column}{0.8\textwidth}
+            $\implies$ optimal parameter range $\approx 1000-5000$ iterations
+        \end{column}
+        \begin{column}{0.1\textwidth}
+            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
+        \end{column}
+    \end{columns}
+
+\end{closingframe}
+
+%
+% SLIDE
+%
+
+\begin{closingframe}{Appendix: Sensitivity Study - Simulated Annealing}
+    \framesubtitle{varying \textbf{step size} (in \% relative to search space)}
+
+    \begin{columns}
+    \begin{column}{0.8\textwidth}
+        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__SA_step_size.pdf}
+    \end{column}
+    \end{columns}
+
+    \begin{columns}
+        \begin{column}{0.8\textwidth}
+            $\implies$ optimal parameter range, step size $\approx 10$\%$-40$\% of search space
+        \end{column}
+        \begin{column}{0.1\textwidth}
+            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
+        \end{column}
+    \end{columns}
+
+\end{closingframe}
+
+%
+% SLIDE
+%
+
+\begin{closingframe}{Appendix: Sensitivity Study - Simulated Annealing}
+    \framesubtitle{varying \textbf{temperature decay type}}
+
+    \begin{columns}
+    \begin{column}{0.8\textwidth}
+        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__SA_temperature.pdf}
+    \end{column}
+    \end{columns}
+
+    \begin{columns}
+        \begin{column}{0.8\textwidth}
+            $\implies$ negligible effect, keep as is
+        \end{column}
+        \begin{column}{0.1\textwidth}
+            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
+        \end{column}
+    \end{columns}
+\end{closingframe}
+
+%
+% SLIDE
+%
+\begin{closingframe}{Appendix: Sensitivity Study - Particle Swarm Optimization}
+    \label{sec:sensitivity_study_pso_appendix}
+    \framesubtitle{varying \textbf{number of iterations}}
+
+    \begin{columns}
+    \begin{column}{0.8\textwidth}
+        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__PSO_iterations.pdf}
+    \end{column}
+    \end{columns}
+
+    \begin{columns}
+        \begin{column}{0.8\textwidth}
+            $\implies$ optimal parameter range $\approx 100-1000$ iterations
+        \end{column}
+        \begin{column}{0.1\textwidth}
+            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
+        \end{column}
+    \end{columns}
+\end{closingframe}
+
+%
+% SLIDE
+%
+
+\begin{closingframe}{Appendix: Sensitivity Study - Particle Swarm Optimization}
+    \framesubtitle{varying \textbf{number of particles}}
+
+    \begin{columns}
+    \begin{column}{0.8\textwidth}
+        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__PSO_n_particles.pdf}
+    \end{column}
+    \end{columns}
+
+    \begin{columns}
+        \begin{column}{0.8\textwidth}
+            $\implies$ optimal parameter range $\approx 100-300$ particles
+        \end{column}
+        \begin{column}{0.1\textwidth}
+            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
+        \end{column}
+    \end{columns}
+\end{closingframe}
+
+%
+% SLIDE
+%
+
+\begin{closingframe}{Appendix: Sensitivity Study - Particle Swarm Optimization}
+    \framesubtitle{varying \textbf{inertial decay factor}}
+
+    \begin{columns}
+    \begin{column}{0.8\textwidth}
+        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__PSO_w.pdf}
+    \end{column}
+    \end{columns}
+
+    \begin{columns}
+        \begin{column}{0.8\textwidth}
+            $\implies$ optimal parameter range $\approx 0.6 - 0.8$ inertial decay factor        \end{column}
+        \begin{column}{0.1\textwidth}
+            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
+        \end{column}
+    \end{columns}
+\end{closingframe}
+
+%
+% SLIDE
+%
+
+\begin{closingframe}{Appendix: Sensitivity Study - Particle Swarm Optimization}
+    \framesubtitle{varying \textbf{acceleration individual optimum}}
+
+    \begin{columns}
+    \begin{column}{0.8\textwidth}
+        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__PSO_a_ind.pdf}
+    \end{column}
+    \end{columns}
+
+    \begin{columns}
+        \begin{column}{0.8\textwidth}
+            $\implies$ negligible effect, keep as is
+        \end{column}
+        \begin{column}{0.1\textwidth}
+            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
+        \end{column}
+    \end{columns}
+\end{closingframe}
+
+%
+% SLIDE
+%
+
+\begin{closingframe}{Appendix: Sensitivity Study - Particle Swarm Optimization}
+    \framesubtitle{varying \textbf{acceleration swarm optimum}}
+
+    \begin{columns}
+    \begin{column}{0.8\textwidth}
+        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__PSO_a_neigh.pdf}
+    \end{column}
+    \end{columns}
+
+    \begin{columns}
+        \begin{column}{0.8\textwidth}
+            $\implies$ negligible effect, keep as is
+        \end{column}
+        \begin{column}{0.1\textwidth}
+            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
+        \end{column}
+    \end{columns}
+\end{closingframe}
+
+%
+% SLIDE
+%
+\begin{closingframe}{Appendix: Sensitivity Study - Adaptive Particle Swarm Optimization}
+    \label{sec:sensitivity_study_apso_appendix}
+    \framesubtitle{varying \textbf{number of iterations}}
+
+    \begin{columns}
+    \begin{column}{0.8\textwidth}
+        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__APSO_iterations.pdf}
+    \end{column}
+    \end{columns}
+
+    \begin{columns}
+        \begin{column}{0.8\textwidth}
+            $\implies$ negligible effect, $\geq 500$
+        \end{column}
+        \begin{column}{0.1\textwidth}
+            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
+        \end{column}
+    \end{columns}
+\end{closingframe}
+
+%
+% SLIDE
+%
+
+\begin{closingframe}{Appendix: Sensitivity Study - Adaptive Particle Swarm Optimization}
+    \framesubtitle{varying \textbf{number of particles}}
+
+    \begin{columns}
+    \begin{column}{0.8\textwidth}
+        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__APSO_n_particles.pdf}
+    \end{column}
+    \end{columns}
+
+    \begin{columns}
+        \begin{column}{0.8\textwidth}
+            $\implies$ negligible effect, $\approx 200$
+        \end{column}
+        \begin{column}{0.1\textwidth}
+            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
+        \end{column}
+    \end{columns}
+\end{closingframe}
+
+%
+% SLIDE
+%
+
+\begin{closingframe}{Appendix: Sensitivity Study - Adaptive Particle Swarm Optimization}
+    \framesubtitle{varying \textbf{inertial decay factor}}
+
+    \begin{columns}
+    \begin{column}{0.8\textwidth}
+        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__APSO_w.pdf}
+    \end{column}
+    \end{columns}
+
+    \begin{columns}
+        \begin{column}{0.8\textwidth}
+            $\implies$ optimal parameter range $\approx 0.7 - 0.8$ inertial decay factor
+        \end{column}
+        \begin{column}{0.1\textwidth}
+            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
+        \end{column}
+    \end{columns}
+\end{closingframe}
+
+%
+% SLIDE
+%
+
+\begin{closingframe}{Appendix: Sensitivity Study - Adaptive Particle Swarm Optimization}
+    \framesubtitle{varying \textbf{acceleration individual optimum}}
+
+    \begin{columns}
+    \begin{column}{0.8\textwidth}
+        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__APSO_a_ind.pdf}
+    \end{column}
+    \end{columns}
+
+    \begin{columns}
+        \begin{column}{0.8\textwidth}
+            $\implies$ optimal parameter $1.0$ acceleration towards individual optimum.
+        \end{column}
+        \begin{column}{0.1\textwidth}
+            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
+        \end{column}
+    \end{columns}
+\end{closingframe}
+
+%
+% SLIDE
+%
+
+\begin{closingframe}{Appendix: Sensitivity Study - Adaptive Particle Swarm Optimization}
+    \framesubtitle{varying \textbf{acceleration swarm optimum}}
+
+    \begin{columns}
+    \begin{column}{0.8\textwidth}
+        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__APSO_a_neigh.pdf}
+    \end{column}
+    \end{columns}
+
+    \begin{columns}
+        \begin{column}{0.8\textwidth}
+            $\implies$ optimal parameter $2.0$ acceleration towards swarm optimum.
+        \end{column}
+        \begin{column}{0.1\textwidth}
+            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
+        \end{column}
+    \end{columns}
+\end{closingframe}
+
+
+%
+% SLIDE
+%
+
+\begin{closingframe}{Appendix: Sensitivity Study - Adaptive Particle Swarm Optimization}
+    \framesubtitle{varying \textbf{interpolation type}}
+
+    \begin{columns}
+    \begin{column}{0.8\textwidth}
+        \includegraphics[width=\columnwidth]{../plots/initial_hyperparam_search__APSO_interpolation.pdf}
+    \end{column}
+    \end{columns}
+
+    \begin{columns}
+        \begin{column}{0.8\textwidth}
+            $\implies$ negligible effect, keep as is (constant)
+        \end{column}
+        \begin{column}{0.1\textwidth}
+            \tiny{\fbox{\textcolor{tabblue}{--} mean \; \colorbox{tabbluealpha}{ } std}}
+        \end{column}
+    \end{columns}
 \end{closingframe}
 
 \end{document}
