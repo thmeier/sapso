@@ -177,7 +177,7 @@ def testfunction_surface_plot(test_funcs, z_offsets, layout, figsize,
     assert len(str(layout)) == 2, f'Expected 2-digit string. Got {layout}'
     assert len(test_funcs) == n * m, 'Layout and test_funcs incompatible!'
 
-    fig =  plt.figure(figsize=figsize, dpi=200)
+    fig =  plt.figure(figsize=figsize, dpi=300)
 
     for i, (test_func, z_offset) in enumerate(zip(test_funcs, z_offsets)):
         ax = fig.add_subplot(n, m, i+1, projection='3d')
@@ -231,7 +231,7 @@ def testfunction_contour_plot(test_funcs, layout, figsize,
     assert len(str(layout)) == 2, f'Expected 2-digit string. Got {layout}'
     assert len(test_funcs) == n * m, 'Layout and test_funcs incompatible!'
 
-    fig, axes = plt.subplots(n, m, figsize=figsize, dpi=200)
+    fig, axes = plt.subplots(n, m, figsize=figsize)
 
     for test_func, ax in zip(test_funcs, axes.flat):
 
@@ -290,7 +290,7 @@ def sensitivity_study_plot(test_funcs, study_config, study_results,
     assert len(test_funcs) == n * m, 'Layout and test_funcs incompatible!'
 
     fig, axes = plt.subplots(
-        n, m, figsize=figsize, dpi=200, layout='constrained'
+        n, m, figsize=figsize, layout='constrained'
     )
 
     for test_func, ax in zip(test_funcs, axes.flat):
@@ -366,7 +366,7 @@ def benchmark_plot(bench_funcs, bench_config, bench_results, method,
     assert len(bench_funcs) == n * m, 'Layout and test_funcs incompatible!'
 
     fig, axes = plt.subplots(
-        n, m, figsize=figsize, dpi=200, layout='constrained'
+        n, m, figsize=figsize, dpi=300, layout='constrained'
     )
 
     for bench_func, ax in zip(bench_funcs, axes.flat):
@@ -397,7 +397,9 @@ def benchmark_plot(bench_funcs, bench_config, bench_results, method,
         for _fitness in fitness_values:
             ax.plot(
                 fncalls_values, _fitness, '+', color=color, ms=1, alpha=0.5,
+                zorder=-1, rasterized=True
             )
+        ax.set_rasterization_zorder(0)
 
         # for all n_retries, plot the fitness of the best encountered values
         ax.plot(
