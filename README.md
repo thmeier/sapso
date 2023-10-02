@@ -9,3 +9,7 @@ Thus one will find additional code for various different 2D test and benchmark f
 For the full final report of the course, which was compiled in the style of a presentation, see [here](https://github.com/thmeier/Optimization-Methods/blob/main/report/presentation/report.pdf).
 
 In the future, once I find the time, I would like to implement the remaining algorithms introduced in the previously mentioned course and use them in some of my personal projects.
+
+## Demonstration
+
+For an incomplete but quick overview of what this library is capable of, check out the [demo](demo_sapso.ipynb)!
