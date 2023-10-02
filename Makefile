@@ -3,8 +3,3 @@ todo:
 
 test:
 	python3 -i unit_test.py
-
-plots: .FORCE
-
-.FORCE:
-	cd report && python3 -i generate_plots.py

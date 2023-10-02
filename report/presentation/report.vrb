@@ -1,6 +1,0 @@
-\frametitle{Benchmark - Adaptive Particle Swarm Optimization}
-\begin{columns}
-    \begin{column}{0.8\textwidth}
-        \includegraphics[width=\columnwidth]{../plots/benchmark__APSO.pdf}
-    \end{column}
-    \end{columns}
